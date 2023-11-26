@@ -55,6 +55,7 @@ const UploadProduct = () => {
       window.location.reload();
     }catch(err){
       alert("Some error occurred! Please try after some time!");
+      setLoading(false);
       console.log(err);
     }
   };
