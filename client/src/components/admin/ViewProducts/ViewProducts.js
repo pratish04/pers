@@ -20,7 +20,7 @@ const ViewProducts=()=>{
         setLoading(false);
       }catch(err){
         console.log("Error: ", err);
-        console.alert("Some error occurred! Please try after some time!");
+        alert("Some error occurred! Please try after some time!");
         setLoading(false);
       }
     }
