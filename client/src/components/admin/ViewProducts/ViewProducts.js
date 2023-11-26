@@ -16,6 +16,8 @@ const ViewProducts=()=>{
     const fetchData = async()=>{
       try{
         const res = await axios.get(
+          // process.env.REACT_APP_SERVER_URL + 
+          // "/view-products"
           "http://localhost:3001/view-products"
         );
         setItems(res.data.items);

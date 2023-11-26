@@ -43,7 +43,7 @@ const UploadProduct = () => {
         tags.push(item.value);
       });
       setLoading(true);
-      const res = await axios.post("http://localhost:3001/admin-product-upload", {
+      const res = await axios.post(process.env.REACT_APP_SERVER_URL+"/admin-product-upload", {
         itemName: itemName,
         itemDescription: itemDescription,
         tags: tags,

@@ -9,6 +9,7 @@ const Navbar=()=>{
 
     return (
         <div className='navbar'>
+            
             <div onClick={()=>{navigate('/upload-products')}}>upload products</div>
             <div onClick={()=>{navigate('/view-products')}}>view products</div>
         </div>

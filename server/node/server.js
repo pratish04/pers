@@ -4,6 +4,8 @@ const cookieParser=require('cookie-parser');
 const multer = require("multer");
 const { Pool, Client } = require("pg");
 
+require('dotenv').config();
+
 const PORT=process.env.PORT || 3001;
 
 const app=express();
@@ -15,24 +17,12 @@ app.use(cors({
     // credentials: true,
 }));
 
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//     credentials: true,
-//   })
-// );
-
 const client = new Client({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'pers',
-  password: 'pratish@Postgres04',
-  port: 5432,
-  // user: process.env.USER,
-  // host: process.env.HOST,
-  // database: process.env.DATABASE,
-  // password: process.env.PASSWORD,
-  // port: process.env.PORT, 
+  user: process.env.USER,
+  host: process.env.HOST,
+  database: process.env.DATABASE,
+  password: process.env.PASSWORD,
+  port: process.env.PG_PORT, 
 });
 
 client.connect()
@@ -72,7 +62,6 @@ app.post("/admin-product-upload", upload.single("image"), async (req, res) => {
 
 app.get('/view-products', async(req, res)=>{
     try{
-        // res.send("hi");
         const query = "SELECT * FROM items ORDER BY item_id DESC";
         client.query(query, (err, result)=>{
             if(err){
