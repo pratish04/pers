@@ -12,3 +12,32 @@ th, td{
     width: 200px;
     word-break: keep-all;
 }
+
+.loader{
+    position: fixed;
+    border: 1px solid black;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(100, 100, 100, 0.7);
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 10px solid #f3f3f3; /* Light grey */
+  border-top: 10px solid #383636; /* Black */
+  border-radius: 50%;
+  animation: spinner 1.5s linear infinite;
+}

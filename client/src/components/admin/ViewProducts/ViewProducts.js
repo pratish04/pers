@@ -7,22 +7,21 @@ import "./ViewProducts.css";
 
 const ViewProducts=()=>{
   const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    console.log(items);
-  }, [items]);
+  const [loading, setLoading]=useState(true);
 
   useEffect(() => {
     const fetchData = async()=>{
       try{
         const res = await axios.get(
-          // process.env.REACT_APP_SERVER_URL + 
-          // "/view-products"
-          "http://localhost:3001/view-products"
+          process.env.REACT_APP_SERVER_URL + 
+          "/view-products"
         );
         setItems(res.data.items);
+        setLoading(false);
       }catch(err){
         console.log("Error: ", err);
+        console.error("Some error occurred! Please try after some time!");
+        setLoading(false);
       }
     }
     fetchData();
@@ -37,6 +36,11 @@ const ViewProducts=()=>{
     <>
       <Navbar />
       <div className="app">
+        {loading && (
+          <div className="loader">
+            <div className="loading-spinner" />
+          </div>
+        )}
         <table>
           <thead>
             <tr
