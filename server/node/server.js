@@ -72,8 +72,6 @@ app.get('/view-products', async(req, res)=>{
                 console.log(err);
             }
             else{
-                console.log("hiihi");
-                console.log(result.rows);
                 res.send({items: result.rows});
             }
         })
