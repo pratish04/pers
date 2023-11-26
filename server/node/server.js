@@ -22,7 +22,11 @@ const client = new Client({
   host: process.env.HOST,
   database: process.env.DATABASE,
   password: process.env.PASSWORD,
-  port: process.env.PG_PORT, 
+  port: process.env.PG_PORT,
+  ssl: {
+    // Here, you can provide additional SSL options if needed
+    rejectUnauthorized: false, // You may need to set this to false if using self-signed certificates
+  },
 });
 
 client.connect()
