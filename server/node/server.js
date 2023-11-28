@@ -23,19 +23,27 @@ const client = new Client({
   database: process.env.DATABASE,
   password: process.env.PASSWORD,
   port: process.env.PG_PORT,
-  ssl: {
-    // Here, you can provide additional SSL options if needed
-    rejectUnauthorized: false, // You may need to set this to false if using self-signed certificates
-  },
+  // ssl: {
+  //   // Here, you can provide additional SSL options if needed
+  //   // rejectUnauthorized: false, // You may need to set this to false if using self-signed certificates
+  // },
 });
 
-client.connect()
-  .then(() => {
-    console.log("Connected to the database");
-  })
-  .catch((error) => {
-    console.error("Error connecting to the database:", error);
-  });
+const handleConnect=()=>{
+  client
+    .connect()
+    .then(() => {
+      console.log("Connected to the database");
+    })
+    .catch((error) => {
+      handleConnect();
+      console.error("Error connecting to the database:", error);
+    });
+};
+
+
+
+handleConnect();
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -45,10 +53,11 @@ app.post("/admin-product-upload", upload.single("image"), async (req, res) => {
     const name=req.body.itemName;
     const description=req.body.itemDescription;
     const tags=req.body.tags;
+    const price=req.body.itemPrice;
     const image=req.file.buffer;
     // Insert the binary image data into the database
-    const query = "INSERT INTO items (item_name, item_description, item_tags, item_image) VALUES ($1, $2, $3, $4)";
-    client.query(query, [name, description, tags, image] , (err, result)=>{
+    const query = "INSERT INTO items (item_name, item_description, item_tags, item_price, item_image) VALUES ($1, $2, $3, $4, $5)";
+    client.query(query, [name, description, tags, price, image] , (err, result)=>{
         if(err){
             console.error(err);
         }

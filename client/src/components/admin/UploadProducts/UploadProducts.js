@@ -13,6 +13,7 @@ const UploadProduct = () => {
   const [itemName, setItemName]=useState("");
   const [error, setError]=useState(false);
   const [itemDescription, setItemDescription]=useState("");
+  const [itemPrice, setItemPrice]=useState("");
   const [selected, setSelected]=useState([]);
   const [selectedImage, setSelectedImage]=useState(null);
   const [imageUrl, setImageUrl]=useState(null);
@@ -24,6 +25,13 @@ const UploadProduct = () => {
     }
   }, [selectedImage]);
 
+  // useEffect(()=>{
+  //   var regex=/^[1-9]\d*(\.\d+)?$/;
+  //   if(!regex.test(itemPrice)){
+  //     setError(true);
+  //   }
+  // }, [itemPrice]);
+
   const handleSubmit= async()=>{
     try{
       if (itemName.length === 0) {
@@ -31,6 +39,10 @@ const UploadProduct = () => {
         return;
       }
       if(selected.length===0){
+        setError(true);
+        return;
+      }
+      if(!(/^[1-9]\d*(\.\d+)?$/).test(itemPrice)){
         setError(true);
         return;
       }
@@ -47,6 +59,7 @@ const UploadProduct = () => {
         itemName: itemName,
         itemDescription: itemDescription,
         tags: tags,
+        itemPrice: itemPrice,
         image: selectedImage,
       }, {
         headers: {"Content-Type": "multipart/form-data"},
@@ -86,94 +99,95 @@ const UploadProduct = () => {
   
   return (
     <>
-    <Navbar />
-    <div className="app">
-      
-      { loading &&
-        <div className="loader">
-          <div className="loading-spinner" />
-        </div>
-      }
-      <div className="center-container">
-        <h1 style={{ textAlign: "center" }}>ADMIN PRODUCT UPLOAD PANEL</h1>
-        <div>
-          <div className="product-details">
-            <input 
-              placeholder="Enter Product Name..." 
-              onChange={(e)=>{
-                setItemName(e.target.value);
-              }} 
-            />
-            { error && itemName.length===0 &&
-              <div className="error">
-                Item name required!
-              </div>
-
-            }
-            <input 
-              placeholder="Enter Product Description..."
-              onChange={(e)=>{
-                setItemDescription(e.target.value);
-              }}
-            />
-            {
-              error && itemDescription.length===0 &&
-              <div className="error">
-                Item description required!
-              </div>
-            }
-            <div>
-              <MultiSelect
-                style={{ width: "150px" }}
-                styles={customStyles}
-                options={itemsArray}
-                value={selected}
-                onChange={setSelected}
-                labelledBy={"Select"}
-                isCreatable={true}
-              />
-            </div>
-            { error && selected.length===0 &&
-              <div className="error"> 
-                No item tags selected!
-              </div>  
-
-            }
-            {selected.length > 0 && 
-              <div className="tags">
-                {selected.map((select) => {
-                  return <span key={select.label}>{select.label}</span>;
-                })}
-              </div>
-            }
+      <Navbar />
+      <div className="app">
+        {loading && (
+          <div className="loader">
+            <div className="loading-spinner" />
           </div>
-          <div className="product-image">
-            <input
-              type="file"
-              id="upload-image"
-              accept="image/*"
-              onChange={(e) => {
-                setSelectedImage(e.target.files[0]);
-              }}
-            />
-            <label htmlFor="upload-image" className="upload-image-button">
-              Upload Image 
-            </label>
-            { error && selectedImage==null &&
-              <div className="error">
-                Image Required!
-              </div>
-            }
-            { selectedImage &&
+        )}
+        <div className="center-container">
+          <h1 style={{ textAlign: "center" }}>ADMIN PRODUCT UPLOAD PANEL</h1>
+          <div>
+            <div className="product-details">
+              <input
+                placeholder="Enter Product Name..."
+                onChange={(e) => {
+                  setItemName(e.target.value);
+                }}
+              />
+              {error && itemName.length === 0 && (
+                <div className="error">Item name required!</div>
+              )}
+              <input
+                placeholder="Enter Product Description..."
+                onChange={(e) => {
+                  setItemDescription(e.target.value);
+                }}
+              />
+              {error && itemDescription.length === 0 && (
+                <div className="error">Item description required!</div>
+              )}
               <div>
-                <img src={imageUrl} alt={selectedImage.name}/>
+                <MultiSelect
+                  style={{ width: "150px" }}
+                  styles={customStyles}
+                  options={itemsArray}
+                  value={selected}
+                  onChange={setSelected}
+                  labelledBy={"Select"}
+                  isCreatable={true}
+                />
               </div>
-            }
-            <button onClick={handleSubmit}>submit</button>
+              {error && selected.length === 0 && (
+                <div className="error">No item tags selected!</div>
+              )}
+              {selected.length > 0 && (
+                <div className="tags">
+                  {selected.map((select) => {
+                    return <span key={select.label}>{select.label}</span>;
+                  })}
+                </div>
+              )}
+            </div>
+            <div className="product-image">
+              <input
+                placeholder="Enter Product Price..."
+                // type="number"
+                // step="0.01"
+                onChange={(e) => {
+                  setItemPrice(e.target.value);
+                }}
+                // pattern="[0-9]+"
+              />
+              {error && !(/^[1-9]\d*(\.\d+)?$/).test(itemPrice) && (
+                <div className="error">Valid item price required!</div>
+              )}
+              <input
+                type="file"
+                id="upload-image"
+                accept="image/*"
+                onChange={(e) => {
+                  setSelectedImage(e.target.files[0]);
+                }}
+                style={{ display: "none" }}
+              />
+              <label htmlFor="upload-image" className="upload-image-button">
+                Upload Image
+              </label>
+              {error && selectedImage === null && (
+                <div className="error">Image Required!</div>
+              )}
+              {selectedImage && (
+                <div>
+                  <img src={imageUrl} alt={selectedImage.name} />
+                </div>
+              )}
+              <button onClick={handleSubmit}>submit</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 };

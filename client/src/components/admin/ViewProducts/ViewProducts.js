@@ -54,6 +54,7 @@ const ViewProducts=()=>{
               <th>item_name</th>
               <th>item_description</th>
               <th>item_tags</th>
+              <th>item_price</th>
               <th>item_image</th>
             </tr>
           </thead>
@@ -65,6 +66,7 @@ const ViewProducts=()=>{
                   <td>{item.item_name}</td>
                   <td>{item.item_description}</td>
                   <td>{item.item_tags.join(", ")}</td>
+                  <td>{item.item_price}</td>
                   <td>
                     {item.item_image.data && (
                       <img
