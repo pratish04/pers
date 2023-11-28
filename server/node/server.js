@@ -25,10 +25,10 @@ const configuration={
   database: process.env.DATABASE,
   password: process.env.PASSWORD,
   port: process.env.PG_PORT,
-  // ssl: {
+  ssl: {
     // Here, you can provide additional SSL options if needed
-    // rejectUnauthorized: false, // You may need to set this to false if using self-signed certificates
-  // },
+    rejectUnauthorized: false, // You may need to set this to false if using self-signed certificates
+  },
 }
 
 var client;
