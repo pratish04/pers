@@ -1,18 +1,18 @@
-.navbar{
-    position: fixed;
-    top: 10px;
-    border: 1px solid black;
-    width: 98%;
-    padding: 5px;
-    display: flex;
-    flex-wrap: wrap;
-    background-color: white;
+.navbar {
+  position: fixed;
+  top: 10px;
+  border: 1px solid black;
+  width: 98%;
+  padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: white;
 }
 
-.navbar>div{
-    margin: 5px;
-    border: 1px solid black;
-    width: fit-content;
-    padding: 5px;
-    cursor: pointer;
+.navbar > div {
+  margin: 5px;
+  border: 1px solid black;
+  width: fit-content;
+  padding: 5px;
+  cursor: pointer;
 }

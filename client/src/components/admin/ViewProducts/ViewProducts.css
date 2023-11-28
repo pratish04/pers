@@ -1,28 +1,29 @@
-table{
-    border: 1px solid black;
+table {
+  border: 1px solid black;
 }
 
-tr{
-    border: 1px solid black;
-    height: fit-content;
+tr {
+  border: 1px solid black;
+  height: fit-content;
 }
 
-th, td{
-    border: 1px solid black;
-    width: 200px;
-    word-break: keep-all;
+th,
+td {
+  border: 1px solid black;
+  width: 200px;
+  word-break: keep-all;
 }
 
-.loader{
-    position: fixed;
-    border: 1px solid black;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(100, 100, 100, 0.7);
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.loader {
+  position: fixed;
+  border: 1px solid black;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(100, 100, 100, 0.7);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes spinner {

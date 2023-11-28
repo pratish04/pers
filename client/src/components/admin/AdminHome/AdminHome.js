@@ -1,11 +1,11 @@
-import Navbar from "../Navbar/Navbar"
+import Navbar from "../Navbar/Navbar";
 
-const AdminHome=()=>{
-    return (
-        <>
-            <Navbar />
-        </>
-    )
+const AdminHome = () => {
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 };
 
 export default AdminHome;

@@ -5,25 +5,24 @@ import Navbar from "../Navbar/Navbar";
 
 import "./ViewProducts.css";
 
-const ViewProducts=()=>{
+const ViewProducts = () => {
   const [items, setItems] = useState([]);
-  const [loading, setLoading]=useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async()=>{
-      try{
+    const fetchData = async () => {
+      try {
         const res = await axios.get(
-          process.env.REACT_APP_SERVER_URL + 
-          "/view-products"
+          process.env.REACT_APP_SERVER_URL + "/view-products"
         );
         setItems(res.data.items);
         setLoading(false);
-      }catch(err){
+      } catch (err) {
         console.log("Error: ", err);
         alert("Some error occurred! Please try after some time!");
         setLoading(false);
       }
-    }
+    };
     fetchData();
   }, []);
 

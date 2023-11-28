@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import {MultiSelect} from 'react-multi-select-component';
+import { MultiSelect } from "react-multi-select-component";
 
 import itemsArray from "./tags";
 
@@ -9,64 +9,60 @@ import Navbar from "../Navbar/Navbar";
 import "./UploadProducts.css";
 
 const UploadProduct = () => {
+  const [itemName, setItemName] = useState("");
+  const [error, setError] = useState(false);
+  const [itemDescription, setItemDescription] = useState("");
+  const [itemPrice, setItemPrice] = useState("");
+  const [selected, setSelected] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const [itemName, setItemName]=useState("");
-  const [error, setError]=useState(false);
-  const [itemDescription, setItemDescription]=useState("");
-  const [itemPrice, setItemPrice]=useState("");
-  const [selected, setSelected]=useState([]);
-  const [selectedImage, setSelectedImage]=useState(null);
-  const [imageUrl, setImageUrl]=useState(null);
-  const [loading, setLoading]=useState(false);
-
-  useEffect(()=>{
-    if(selectedImage){
+  useEffect(() => {
+    if (selectedImage) {
       setImageUrl(URL.createObjectURL(selectedImage));
     }
   }, [selectedImage]);
 
-  // useEffect(()=>{
-  //   var regex=/^[1-9]\d*(\.\d+)?$/;
-  //   if(!regex.test(itemPrice)){
-  //     setError(true);
-  //   }
-  // }, [itemPrice]);
-
-  const handleSubmit= async()=>{
-    try{
+  const handleSubmit = async () => {
+    try {
       if (itemName.length === 0) {
         setError(true);
         return;
       }
-      if(selected.length===0){
+      if (selected.length === 0) {
         setError(true);
         return;
       }
-      if(!(/^[1-9]\d*(\.\d+)?$/).test(itemPrice)){
+      if (!/^[1-9]\d*(\.\d+)?$/.test(itemPrice)) {
         setError(true);
         return;
       }
-      if(!selectedImage){
+      if (!selectedImage) {
         setError(true);
         return;
       }
-      let tags=[];
-      selected.forEach((item)=>{
+      let tags = [];
+      selected.forEach((item) => {
         tags.push(item.value);
       });
       setLoading(true);
-      const res = await axios.post(process.env.REACT_APP_SERVER_URL+"/admin-product-upload", {
-        itemName: itemName,
-        itemDescription: itemDescription,
-        tags: tags,
-        itemPrice: itemPrice,
-        image: selectedImage,
-      }, {
-        headers: {"Content-Type": "multipart/form-data"},
-      });
+      const res = await axios.post(
+        process.env.REACT_APP_SERVER_URL + "/admin-product-upload",
+        {
+          itemName: itemName,
+          itemDescription: itemDescription,
+          tags: tags,
+          itemPrice: itemPrice,
+          image: selectedImage,
+        },
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
       console.log(res.data.message);
       window.location.reload();
-    }catch(err){
+    } catch (err) {
       alert("Some error occurred! Please try after some time!");
       setLoading(false);
       console.log(err);
@@ -96,7 +92,7 @@ const UploadProduct = () => {
       },
     }),
   };
-  
+
   return (
     <>
       <Navbar />
@@ -153,14 +149,11 @@ const UploadProduct = () => {
             <div className="product-image">
               <input
                 placeholder="Enter Product Price..."
-                // type="number"
-                // step="0.01"
                 onChange={(e) => {
                   setItemPrice(e.target.value);
                 }}
-                // pattern="[0-9]+"
               />
-              {error && !(/^[1-9]\d*(\.\d+)?$/).test(itemPrice) && (
+              {error && !/^[1-9]\d*(\.\d+)?$/.test(itemPrice) && (
                 <div className="error">Valid item price required!</div>
               )}
               <input
