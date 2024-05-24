@@ -82,7 +82,7 @@ app.post("/admin-product-upload", upload.single("image"), async (req, res) => {
 
 app.get("/view-products", async (req, res) => {
   try {
-    const query = "SELECT * FROM items ORDER BY item_id DESC";
+    const query = "SELECT * FROM items ORDER BY item_id DESC LIMIT 25";
     client.query(query, (err, result) => {
       if (err) {
         console.log(err);
